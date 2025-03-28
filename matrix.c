@@ -18,15 +18,26 @@ matrix *create_matrix(int string, int column)
     }
     return matrix_ptr;
 }
-void push_int_el(int el, matrix *matrix, int string_indx, int column_indx)
+matrix *get_sum_matrix(matrix *matrix_one, matrix *matrix_two)
 {
-    matrix->el[string_indx][column_indx] = el;
+    matrix *matrix_result = malloc(sizeof(matrix));
+    if (matrix_one->string == matrix_two->string || matrix_one->column == matrix_two->column)
+    {
+        if (matrix_one->type_info == matrix_two->type_info)
+        {
+            for (int i = 1; i <= (matrix_one->column + matrix_one->string); i++)
+            {
+                matrix_one->type_info->sum_num(matrix_one->el, matrix_two->el, matrix_result->el);
+                get_increment_el(matrix_one);
+                get_increment_el(matrix_two);
+            }
+        }
+    }
 }
-void push_float_el(float el, matrix *matrix, int string_indx, int column_indx)
+void get_increment_el(matrix *matrix)
 {
-    matrix->float_el[string_indx][column_indx] = el;
-}
-void del(matrix *matrix, int string_indx, int column_indx)
-{
-    matrix->el[string_indx][column_indx] = 0;
+    int *element_ptr = malloc(sizeof(int));
+    element_ptr = (int *)matrix->el;
+    element_ptr += matrix->type_info->get_size();
+    matrix->el = element_ptr;
 }

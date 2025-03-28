@@ -9,5 +9,9 @@ typedef struct matrix_t
     int column;
     type_info *type_info
 } matrix;
-matrix *create_float_matrix(int string, int column, float el);
-matrix *create_int_matrix(int string, int column, int el);
+matrix *generate_float_matrix(int string, int column, float el);
+matrix *generate_int_matrix(int string, int column, int el);
+matrix *create_matrix(int string, int column, int el);
+matrix *get_sum_matrix(matrix *matrix_one, matrix *matrix_two);
+matrix *get_multiplication_matrix(matrix *matrix_one, matrix *matrix_two);
+void get_increment_el(matrix *matrix);
