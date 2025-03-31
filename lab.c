@@ -64,7 +64,7 @@ int main()
         int string = 0;
         int column = 0;
         printf("size of matrix (string and column)\n\t");
-        scanf("%", matrix_size);
+        scanf("%c", matrix_size);
         scan_string(matrix_size, &string, &column);
         printf("matrix_size:%d", string * column);
         break;

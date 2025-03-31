@@ -5,13 +5,17 @@
 typedef struct matrix_t
 {
     void *el;
-    int string;
-    int column;
+    int count_of_string;
+    int count_of_column;
     type_info *type_info
 } matrix;
-matrix *generate_float_matrix(int string, int column, float el);
-matrix *generate_int_matrix(int string, int column, int el);
-matrix *create_matrix(int string, int column, int el);
-matrix *get_sum_matrix(matrix *matrix_one, matrix *matrix_two);
-matrix *get_multiplication_matrix(matrix *matrix_one, matrix *matrix_two);
+// избавиться от matrix*
+// обЪект как константа с ленивой инициализацией
+matrix *generate_double_matrix(int string, int column);
+matrix *generate_int_matrix(int string, int column);
+matrix *create_matrix(int string, int column);
+void get_sum_matrix(matrix *matrix_one, matrix *matrix_two);
+void get_multiplication_matrix(matrix *matrix_one, matrix *matrix_two);
+void get_needed_el(int string_index, int column_index, matrix *matrix);
 void get_increment_el(matrix *matrix);
+void print_matrix(matrix *matrix);

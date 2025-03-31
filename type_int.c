@@ -11,7 +11,7 @@ void get_multiplication(void *num_one, void *num_two, void *result)
     *(int *)result = *(int *)num_one * *(int *)num_two;
 }
 
-size_t get_size_el()
+size_t get_size_int_el()
 {
     return sizeof(int);
 }
@@ -22,7 +22,7 @@ void get_int_type(matrix *matrix)
         matrix->type_info = malloc(sizeof(type_info));
         matrix->type_info->sum_num = get_sum;
         matrix->type_info->multiplication_num = get_multiplication;
-        matrix->type_info->get_size = get_size_el;
+        matrix->type_info->get_size = get_size_int_el;
     }
     else
     {
