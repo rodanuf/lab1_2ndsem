@@ -5,47 +5,73 @@
 // #include "functions.h"
 // #include "lab.h"
 
-// int scan_string(char* string){
-//     int count_of_numbers = 0;
-//     int* numbers_array;
-//     for (int i=0;(int) sizeof(string);i++){
-//         if ((((int) string[i]) == 48) && (count_of_numbers == 0)){
-//             printf ("number cannot sart with zero");
-//             return 0;
-//         }
-//         if (47<((int) string[i])<58){
-//             if (numbers_array == NULL){
-//                 numbers_array = malloc(sizeof(1));
-//                 numbers_array[0] = ((int) string[i] - 48);
-//             }
-//             else{
-//                 if (count_of_numbers !=0){
-//                     numbers_array[((int) sizeof(numbers_array))/((int) sizeof(int)) - 1] = numbers_array[((int) sizeof(numbers_array))/((int) sizeof(int)) - 1]*10 + string[i]-48;
-//                 }
-//                 else{
-//                     int* new_numbers_array = malloc(sizeof(numbers_array))
-//                     for (int j=0;(int) sizeof())
-//                 }
-//             }
-//         }
-//     }
-// }
-void scan_string(char *string, int *a, int *b)
+int scan_string(char *string)
 {
-    if (((int)sizeof(string)) % 2 == 0)
+    int count_of_numbers = 0;
+    int *numbers_array = NULL;
+    int line = 0;
+    int column = 0;
+    for (int i = 0; i < sizeof(string); i++)
     {
-        for (int i = 0; ((int)sizeof(string)) / 2; i++)
+        printf("naumber_of_el:%d\n", (int)string[i]);
+        if ((((int)string[i]) == 48) && (count_of_numbers == 0))
         {
-            *a = (*a) * (int)pow(10, i) + (((int)string[i]) - 48);
+            printf("number cannot sart with zero");
+            return 0;
         }
-        for (int j = 0; ((int)sizeof(string)) / 2; j++)
+        else
         {
-            *b = (*b) * (int)pow(10, j) + (((int)string[j + ((int)sizeof(string)) / 2]) - 48);
+            if (((int)*string > 47) && ((int)*string < 58))
+            {
+                if (numbers_array == NULL)
+                {
+                    count_of_numbers++;
+                    numbers_array = malloc(sizeof(int));
+                    numbers_array[0] = ((int)string[i] - 48);
+                }
+                else
+                {
+                    printf("%d\n", count_of_numbers);
+                    count_of_numbers++;
+                    int *new_numbers_array = calloc(count_of_numbers, sizeof(int));
+                    printf("size_of_array:%d\n", sizeof(new_numbers_array));
+                    for (int j = 0; j <= (count_of_numbers - 2); j++)
+                    {
+                        new_numbers_array[j] = numbers_array[j];
+                    }
+                    new_numbers_array++;
+                    *new_numbers_array = (int)*string - 48;
+                    numbers_array = new_numbers_array;
+                    for (int l = 0; l <= (count_of_numbers - 1); l++)
+                    {
+                        printf("%d\n", *numbers_array);
+                        numbers_array++;
+                    }
+                }
+            }
         }
+        string++;
     }
-    else
+    if (count_of_numbers % 2 == 0)
     {
-        printf("wrong enter\n");
+        for (int k = 0; k <= (count_of_numbers / 2 - 1); k++)
+        {
+            line = line * 10;
+            column = column * 10;
+            line += numbers_array[k];
+            column += numbers_array[k + (count_of_numbers / 2)];
+            printf("%d\n", line);
+            printf("%d\n", column);
+        }
+        if (line == column)
+        {
+            printf("%d\n", &string);
+            printf("%d\n", &column);
+        }
+        else
+        {
+            return 0;
+        }
     }
 }
 
@@ -64,8 +90,9 @@ int main()
         int string = 0;
         int column = 0;
         printf("size of matrix (string and column)\n\t");
-        scanf("%c", matrix_size);
-        scan_string(matrix_size, &string, &column);
+        fgets(matrix_size, sizeof(matrix_size), stdin);
+        scanf("%79[^\n]", matrix_size);
+        scan_string(matrix_size);
         printf("matrix_size:%d", string * column);
         break;
     }
