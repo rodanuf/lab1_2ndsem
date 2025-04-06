@@ -1,4 +1,6 @@
 #pragma once
+#include "type_int.h"
+#include "type_double.h"
 
 typedef struct type_info_t
 {

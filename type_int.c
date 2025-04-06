@@ -2,13 +2,13 @@
 #include "type_int.h"
 #include "type_info.h"
 
-void get_sum(void *num_one, void *num_two, void *result)
+void get_int_sum(void *num_one, void *num_two)
 {
-    *(int *)result = *(int *)num_one + *(int *)num_two;
+    *(int *)num_one = *(int *)num_one + *(int *)num_two;
 }
-void get_multiplication(void *num_one, void *num_two, void *result)
+void get_int_multiplication(void *num_one, void *num_two)
 {
-    *(int *)result = *(int *)num_one * *(int *)num_two;
+    *(int *)num_one = *(int *)num_one * *(int *)num_two;
 }
 
 size_t get_size_int_el()
