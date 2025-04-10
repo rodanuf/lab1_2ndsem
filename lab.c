@@ -23,10 +23,15 @@ int main()
         scanf("%79[^\n]", matrix_size);
         scan_string(matrix_size, &line, &column);
         printf("matrix_size:%d", line * column);
-        printf("what type you need?\n");
+        printf("what type of matrix you need?\n");
         printf("double/integer?\n");
         scanf("%s", &choiced_type);
-        create_matrix(line, column, choiced_type);
+        // TODO: move this function into controllerr
+        if (strcmp(choiced_type, "double") == 0)
+        {
+            matrix *first_matrix = create_matrix();
+            first_matrix->type_info = get_type_double(first_matrix);
+        }
         break;
     }
     return 0;
