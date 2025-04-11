@@ -1,7 +1,7 @@
 #pragma once
 #include "matrix.h"
 
-void get_int_type(matrix *matrix);
+const struct type_info *get_int_type(matrix *matrix);
 void get_sum(void *num_one, void *num_two, void *result);
 void get_multiplication(void *num_one, void *num_two, void *result);
 void print_int_element(void *element);

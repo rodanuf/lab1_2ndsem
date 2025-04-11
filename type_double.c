@@ -21,6 +21,12 @@ void print_double_element(void *element)
 {
     printf("%lf ", *(double *)element);
 }
+void write_double_element(void *element_ptr)
+{
+    double num;
+    scanf("%lf", &num);
+    *(double *)element_ptr = num;
+}
 const type_info *get_double_type(matrix *matrix)
 {
     if (matrix != NULL)
@@ -32,6 +38,7 @@ const type_info *get_double_type(matrix *matrix)
             matrix->type_info->multiplication_num = get_float_multiplication;
             matrix->type_info->get_size = get_size_double_element;
             matrix->type_info->print_num = print_double_element;
+            matrix->type_info->write_num = write_double_element;
             return matrix->type_info;
         }
     }

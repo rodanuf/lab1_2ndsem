@@ -14,11 +14,17 @@ void print_int_element(void *element)
 {
     printf("%d ", *(int *)element);
 }
+void write_int_element(void *element)
+{
+    int num;
+    scanf("%d", &num);
+    *(int *)element = num;
+}
 size_t get_size_int_el()
 {
     return sizeof(int);
 }
-const type_info *get_int_type(matrix *matrix)
+const struct type_info *get_int_type(matrix *matrix)
 {
     if (matrix != NULL)
     {
@@ -29,6 +35,7 @@ const type_info *get_int_type(matrix *matrix)
             matrix->type_info->multiplication_num = get_multiplication;
             matrix->type_info->get_size = get_size_int_element;
             matrix->type_info->print_num = print_int_element;
+            matrix->type_info->write_num = write_int_element;
         }
     }
     else

@@ -16,8 +16,10 @@ void print_error(int error)
         break;
     case MEMORY_ERROR:
         printf("Memory error\n");
+        break;
     case MATRIX_IS_NULL:
         printf("Matrix is null\n");
+        break;
     default:
         break;
     }

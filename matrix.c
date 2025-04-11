@@ -1,82 +1,9 @@
 #include "matrix.h"
 #include "errors.h"
 
-// TODO: move this function also into controller
-int scan_string(char *string, int *line, int *column)
-{
-    int count_of_numbers = 0;
-    int *numbers_array = NULL;
-    while (*string != 0)
-    {
-        printf("naumber_of_el:%d\n", (int)*string);
-        if ((((int)*string) == 48) && (count_of_numbers == 0))
-        {
-            printf("number cannot sart with zero\n");
-            return 0;
-        }
-        else
-        {
-            if (((int)*string > 47) && ((int)*string < 58))
-            {
-                if (numbers_array == NULL)
-                {
-                    count_of_numbers++;
-                    numbers_array = malloc(sizeof(int));
-                    numbers_array[0] = ((int)*string - 48);
-                }
-                else
-                {
-                    printf("%d\n", count_of_numbers);
-                    count_of_numbers++;
-                    int *new_numbers_array = calloc(count_of_numbers, sizeof(int));
-                    printf("size_of_array:%d\n", sizeof(new_numbers_array));
-                    for (int j = 0; j <= (count_of_numbers - 2); j++)
-                    {
-                        new_numbers_array[j] = numbers_array[j];
-                        new_numbers_array[count_of_numbers - 1] = (int)*string - 48;
-                    }
-                    for (int l = 0; l <= (count_of_numbers - 1); l++)
-                    {
-                        printf("%d\n", new_numbers_array[l]);
-                    }
-                    numbers_array = new_numbers_array;
-                    for (int l = 0; l <= (count_of_numbers - 1); l++)
-                    {
-                        printf("%d\n", numbers_array[l]);
-                    }
-                }
-            }
-        }
-        string++;
-    }
-    if (count_of_numbers % 2 == 0)
-    {
-        for (int k = 0; k <= (count_of_numbers / 2 - 1); k++)
-        {
-            *line = *line * 10;
-            *column = *column * 10;
-            *line += numbers_array[k];
-            *column += numbers_array[k + (count_of_numbers / 2)];
-            printf("%d\n", *line);
-            printf("%d\n", *column);
-        }
-        if (line == column)
-        {
-            printf("%d\n", *line);
-            printf("%d\n", *column);
-        }
-        else
-        {
-            return 0;
-        }
-    }
-}
-
-matrix *create_matrix(int count_of_line, int count_of_column)
+matrix *create_matrix()
 {
     matrix *matrix_ptr = malloc(sizeof(matrix));
-    matrix_ptr->count_of_line = count_of_line;
-    matrix_ptr->count_of_column = count_of_column;
     return matrix_ptr;
 }
 
@@ -93,8 +20,12 @@ void get_sum_matrix(matrix *matrix_one, matrix *matrix_two)
 
                 matrix_one->type_info->sum_num(element_ptr_on_first_matrix, element_ptr_on_second_matrix, element_ptr_on_first_matrix);
                 element_ptr_on_first_matrix = get_increment_element(matrix_one);
-                get_increment_element(matrix_two);
+                element_ptr_on_second_matrix = get_increment_element(matrix_two);
             }
+        }
+        else
+        {
+            print_error(INCORREXT_OPERATION);
         }
     }
     else
@@ -102,6 +33,7 @@ void get_sum_matrix(matrix *matrix_one, matrix *matrix_two)
         print_error(INCORRECT_FORMAT_OF_MATRIX);
     }
 }
+
 void get_multiplication_matrix(matrix *matrix_one, matrix *matrix_two)
 {
     if (matrix_one->count_of_line == matrix_two->count_of_line || matrix_one->count_of_column == matrix_two->count_of_column)
@@ -129,7 +61,7 @@ void get_multiplication_matrix(matrix *matrix_one, matrix *matrix_two)
         print_error(INCORRECT_FORMAT_OF_MATRIX);
     }
 }
-// TODO: rewrite this function (what if we need in a21 elment?)
+
 void *get_needed_element(int line_index, int column_index, matrix *matrix)
 {
     void *needed_elemnt_ptr = NULL;
@@ -137,16 +69,10 @@ void *get_needed_element(int line_index, int column_index, matrix *matrix)
     {
         for (int j = 1; j <= (column_index); j++)
         {
-            if (i == line_index && j == column_index)
-            {
-                return needed_elemnt_ptr;
-            }
-            else
-            {
-                needed_elemnt_ptr = get_increment_element(matrix);
-            }
+            needed_elemnt_ptr = get_increment_element(matrix);
         }
     }
+    return needed_elemnt_ptr;
 }
 //
 void *get_increment_element(matrix *matrix)
@@ -156,6 +82,7 @@ void *get_increment_element(matrix *matrix)
     element_ptr++;
     return element_ptr;
 }
+
 void *get_decrement_element(void *element_ptr)
 {
     void *new_element_ptr = NULL;
@@ -163,14 +90,14 @@ void *get_decrement_element(void *element_ptr)
     new_element_ptr--;
     return new_element_ptr;
 }
-// TODO: move this function into controller
-// TODO: maybe write a this function in type_info?
+
 void print_matrix(matrix *matrix)
 {
     void *element_ptr = matrix->element;
     for (int i = 1; i <= (matrix->count_of_column * matrix->count_of_line); i++)
     {
-        printf("%p", *)
+        matrix->type_info->print_num(element_ptr);
+        element_ptr = get_increment_element(matrix);
     }
 }
 
@@ -178,7 +105,6 @@ void transport_matrix(matrix *matrix)
 {
     if (matrix != NULL)
     {
-        int size_of_el = matrix->type_info->get_size;
         void *element_ptr = NULL;
         void *element_ptr_for_transport = NULL;
         for (int j = 1; j <= (matrix->count_of_column); j++)
