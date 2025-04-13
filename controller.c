@@ -107,7 +107,6 @@ void giving_data_type_to_matrix(matrix *matrix, char *choiced_type)
     {
         matrix->type_info = get_type_integer(matrix);
     }
-    matrix->type_info = get_type_double(matrix);
 }
 
 void write_value_into_matrix(matrix *matrix)

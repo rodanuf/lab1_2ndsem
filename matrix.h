@@ -7,8 +7,8 @@
 typedef struct matrix_t
 {
     void *element;
-    int count_of_line;
-    int count_of_column;
+    int lines;
+    int columns;
     type_info *type_info
 } matrix;
 // избавиться от matrix*
@@ -18,7 +18,7 @@ matrix *create_matrix();
 int scan_string(char *string, int *line, int *column);
 void get_sum_matrix(matrix *matrix_one, matrix *matrix_two);
 void get_multiplication_matrix(matrix *matrix_one, matrix *matrix_two);
-void *get_needed_element(int string_index, int column_index, matrix *matrix);
+void *get_needed_element(int line_index, int column_index, matrix *matrix);
 void *get_increment_element(matrix *matrix);
 void print_matrix(matrix *matrix);
 void transport_matrix(matrix *matrix);

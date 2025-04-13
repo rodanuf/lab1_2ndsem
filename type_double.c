@@ -7,11 +7,11 @@
 // TODO: create alias for functions
 void get_float_sum(void *num_one, void *num_two, void *result)
 {
-    *(float *)result = *(float *)num_one + *(float *)num_two;
+    *(double *)result = *(double *)num_one + *(double *)num_two;
 }
 void get_float_multiplication(void *num_one, void *num_two, void *result)
 {
-    *(float *)result = *(float *)num_one * *(float *)num_two;
+    *(double *)result = *(double *)num_one * *(float *)num_two;
 }
 size_t get_size_double_element()
 {

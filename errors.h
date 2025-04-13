@@ -1,10 +1,7 @@
-typedef enum
-{
-    INCORRECT_FORMAT_OF_MATRIX = 1,
-    INCORRECT_INPUT = 2,
-    INCORREXT_OPERATION = 3,
-    MEMORY_ERROR = 4,
-    MATRIX_IS_NULL = 5
-} errors;
+#pragma once
+#include "type_info.h"
 
-void print_error(errors error);
+void print_error(code_errors error);
+void compare_of_matrix(matrix *matrix1, matrix *matrix2);
+void check_format_matrix(matrix *matrix);
+void check_size_matrix(matrix *matrix);
