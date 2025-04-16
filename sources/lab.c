@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "matrix.h"
-#include "controller.h"
+#include "../headers/matrix.h"
+#include "../headers/controller.h"
 
 int main()
 {

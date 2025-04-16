@@ -9,7 +9,7 @@ typedef struct matrix_t
     void *element;
     int lines;
     int columns;
-    type_info *type_info
+    const struct type_info *type_info;
 } matrix;
 // избавиться от matrix*
 // обЪект как константа с ленивой инициализацией

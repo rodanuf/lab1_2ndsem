@@ -1,5 +1,5 @@
-#include "controller.h"
-#include "type_info.h"
+#include "../headers/controller.h"
+#include "../headers/type_info.h"
 
 int scan_string(char *string, int *line, int *column)
 {
@@ -48,7 +48,7 @@ int scan_string(char *string, int *line, int *column)
         }
         string++;
     }
-    if (count_of_numbers % 2 == 0)
+    if (check_size_matrix(count_of_numbers))
     {
         for (int k = 0; k <= (count_of_numbers / 2 - 1); k++)
         {
@@ -66,6 +66,7 @@ int scan_string(char *string, int *line, int *column)
         }
         else
         {
+            print_error(INCORRECT_FORMAT_OF_MATRIX);
             return 0;
         }
     }
@@ -88,7 +89,6 @@ void multiple_choice(int starting_choice)
         printf("matrix_size:%d", line * column);
         matrix *matrix = create_matrix(line, column);
         printf("what type of matrix you need?\n");
-        printf("double/integer?\n");
         scanf("%s", &choiced_type);
         giving_data_type_to_matrix(matrix, choiced_type);
         printf("please, write a value to you matrix\n");
@@ -113,9 +113,12 @@ void write_value_into_matrix(matrix *matrix)
 {
     void *element_ptr = NULL;
     element_ptr = matrix->element;
-    for (int i = 1; i <= (matrix->count_of_line * matrix->count_of_column); i++)
+    if (is_correct_type(matrix))
     {
-        matrix->type_info->write_num(element_ptr);
-        element_ptr = get_increment_element(matrix);
+        for (int i = 1; i <= (matrix->lines * matrix->columns); i++)
+        {
+            matrix->type_info->read(element_ptr);
+            element_ptr = get_increment_element(matrix);
+        }
     }
 }
