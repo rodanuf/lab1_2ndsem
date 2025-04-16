@@ -28,34 +28,29 @@ void read_double_element(void *element_ptr)
     scanf("%lf", &num);
     *(double *)element_ptr = num;
 }
-types get_type()
+types return_double_type()
 {
     return DOUBLE;
 }
+
 static struct type_info *type_p = NULL;
-const struct type_info *get_double_type(matrix *matrix)
+
+const struct type_info *get_double_type()
 {
-    if (matrix != NULL)
+    if (type_p == NULL)
     {
-        if (matrix->type_info == NULL)
-        {
-            type_p = malloc(sizeof(type_info));
-            type_p->sum = get_float_sum;
-            type_p->multiplication = get_float_multiplication;
-            type_p->get_size = get_size_double_element;
-            type_p->print = print_double_element;
-            type_p->read = read_double_element;
-            type_p->type = get_type;
-            return matrix->type_info = type_p;
-        }
-        else
-        {
-            return matrix->type_info;
-        }
+        type_p = malloc(sizeof(type_info));
+        type_p->sum = get_float_sum;
+        type_p->multiplication = get_float_multiplication;
+        type_p->get_size = get_size_double_element;
+        type_p->print = print_double_element;
+        type_p->read = read_double_element;
+        type_p->type = return_double_type;
+        type_p->get_size = get_size_double_element;
+        return type_p;
     }
     else
     {
-        print_errors(MATRIX_IS_NULL);
-        return NULL;
+        return type_p;
     }
 }

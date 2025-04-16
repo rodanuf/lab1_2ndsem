@@ -4,7 +4,7 @@
 #include <string.h>
 #include "type_info.h"
 
-typedef struct matrix_t
+typedef struct matrix
 {
     void *element;
     int lines;
@@ -15,7 +15,6 @@ typedef struct matrix_t
 // обЪект как константа с ленивой инициализацией
 matrix *create_matrix();
 // create new ptr;
-int scan_string(char *string, int *line, int *column);
 void get_sum_matrix(matrix *matrix_one, matrix *matrix_two);
 void get_multiplication_matrix(matrix *matrix_one, matrix *matrix_two);
 void *get_needed_element(int line_index, int column_index, matrix *matrix);

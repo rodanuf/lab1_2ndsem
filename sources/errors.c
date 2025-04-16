@@ -27,14 +27,9 @@ void print_error(code_errors error)
     }
 }
 ///// TODO: return code_error, if it
-bool is_matrix_same(matrix *matrix1, matrix *matrix2)
+bool is_matrixs_same(matrix *matrix1, matrix *matrix2)
 {
-    if (matrix1->lines == matrix2->lines ||
-        matrix1->columns == matrix2->columns ||
-        matrix1->type_info->type == matrix2->type_info->type)
-    {
-        return true;
-    }
+    if (matrix1->type_info->type == matrix2->type_info->type)
     {
         return true;
     }

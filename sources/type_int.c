@@ -1,7 +1,7 @@
 #include <stdio.h>
+#include "../headers/matrix.h"
 #include "../headers/type_info.h"
 #include "../headers/errors.h"
-#include "../headers/matrix.h"
 
 void get_int_sum(void *num_one, void *num_two, void *result)
 {
@@ -21,7 +21,7 @@ void read_int_element(void *element)
     scanf("%d", &num);
     *(int *)element = num;
 }
-types get_type()
+types return_int_type()
 {
     return INT;
 }
@@ -29,30 +29,24 @@ size_t get_size_int_element()
 {
     return sizeof(int);
 }
+
 static struct type_info *type_p = NULL;
 
-const struct type_info *get_int_type(matrix *matrix)
+const struct type_info *get_int_type()
 {
-    if (is_matrix_null(matrix))
+    if (type_p == NULL)
     {
-        if (matrix->type_info == NULL)
-        {
-            type_p = malloc(sizeof(type_info));
-            type_p->sum = get_int_sum;
-            type_p->multiplication = get_int_multiplication;
-            type_p->print = print_int_element;
-            type_p->read = read_int_element;
-            type_p->type = get_type;
-            type_p->get_size = get_size_int_element;
-            return matrix->type_info = type_p;
-        }
-        else
-        {
-            return matrix->type_info;
-        }
+        type_p = malloc(sizeof(type_info));
+        type_p->sum = get_int_sum;
+        type_p->multiplication = get_int_multiplication;
+        type_p->print = print_int_element;
+        type_p->read = read_int_element;
+        type_p->type = return_int_type;
+        type_p->get_size = get_size_int_element;
+        return type_p;
     }
     else
     {
-        return NULL;
+        return type_p;
     }
 }

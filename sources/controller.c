@@ -1,13 +1,13 @@
 #include "../headers/controller.h"
 #include "../headers/type_info.h"
+#include "../headers/errors.h"
 
-int scan_string(char *string, int *line, int *column)
+void scan_string(char *string, int *line, int *column)
 {
     int count_of_numbers = 0;
     int *numbers_array = NULL;
     while (*string != 0)
     {
-        printf("naumber_of_el:%d\n", (int)*string);
         if ((((int)*string) == 48) && (count_of_numbers == 0))
         {
             printf("number cannot sart with zero\n");
@@ -25,10 +25,8 @@ int scan_string(char *string, int *line, int *column)
                 }
                 else
                 {
-                    printf("%d\n", count_of_numbers);
                     count_of_numbers++;
                     int *new_numbers_array = calloc(count_of_numbers, sizeof(int));
-                    printf("size_of_array:%d\n", sizeof(new_numbers_array));
                     for (int j = 0; j <= (count_of_numbers - 2); j++)
                     {
                         new_numbers_array[j] = numbers_array[j];
@@ -48,7 +46,7 @@ int scan_string(char *string, int *line, int *column)
         }
         string++;
     }
-    if (check_size_matrix(count_of_numbers))
+    if (is_correct_size(count_of_numbers))
     {
         for (int k = 0; k <= (count_of_numbers / 2 - 1); k++)
         {
@@ -56,19 +54,16 @@ int scan_string(char *string, int *line, int *column)
             *column = *column * 10;
             *line += numbers_array[k];
             *column += numbers_array[k + (count_of_numbers / 2)];
-            printf("%d\n", *line);
-            printf("%d\n", *column);
         }
-        if (line == column)
-        {
-            printf("%d\n", *line);
-            printf("%d\n", *column);
-        }
-        else
-        {
-            print_error(INCORRECT_FORMAT_OF_MATRIX);
-            return 0;
-        }
+    }
+    if (*line == *column)
+    {
+        printf("lines:%d\n", *line);
+        printf("columns:%d\n", *column);
+    }
+    else
+    {
+        print_error(INCORRECT_FORMAT_OF_MATRIX);
     }
 }
 
@@ -86,7 +81,7 @@ void multiple_choice(int starting_choice)
         fgets(matrix_size, sizeof(matrix_size), stdin);
         scanf("%79[^\n]", matrix_size);
         scan_string(matrix_size, &line, &column);
-        printf("matrix_size:%d", line * column);
+        printf("matrix_size:%d\n", line * column);
         matrix *matrix = create_matrix(line, column);
         printf("what type of matrix you need?\n");
         scanf("%s", &choiced_type);
@@ -101,11 +96,11 @@ void giving_data_type_to_matrix(matrix *matrix, char *choiced_type)
 {
     if (strcmp(choiced_type, "double") == 0)
     {
-        matrix->type_info = get_type_double(matrix);
+        matrix->type_info = get_double_type(matrix);
     }
     if (strcmp(choiced_type, "integer") == 0)
     {
-        matrix->type_info = get_type_integer(matrix);
+        matrix->type_info = get_int_type(matrix);
     }
 }
 
