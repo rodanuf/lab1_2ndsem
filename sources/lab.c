@@ -5,10 +5,11 @@
 
 int main()
 {
-    printf("enter what you want:\n\t");
-    printf("enter matrix - 1\n\t");
-    printf("generate random matrix - 2\n\t");
-    printf("read matrix from smth - 3\n");
+    printf("please, choose a matrix operation:\n\t");
+    printf("1. sum matrices\n\t");
+    printf("2. multplication matrices\n\t");
+    printf("3. transposition of matrix\n\t");
+    printf("4. multiolication matrix on scalar\n");
     int starting_choice;
     scanf("%i", &starting_choice);
     multiple_choice(starting_choice);

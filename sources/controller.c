@@ -32,15 +32,7 @@ void scan_string(char *string, int *line, int *column)
                         new_numbers_array[j] = numbers_array[j];
                         new_numbers_array[count_of_numbers - 1] = (int)*string - 48;
                     }
-                    for (int l = 0; l <= (count_of_numbers - 1); l++)
-                    {
-                        printf("%d\n", new_numbers_array[l]);
-                    }
                     numbers_array = new_numbers_array;
-                    for (int l = 0; l <= (count_of_numbers - 1); l++)
-                    {
-                        printf("%d\n", numbers_array[l]);
-                    }
                 }
             }
         }
@@ -72,48 +64,54 @@ void multiple_choice(int starting_choice)
     switch (starting_choice)
     {
     case 1:
-
+        printf("enter your matrices (remember, matrices must be with same types) \n");
         char matrix_size[80];
         char choiced_type[30];
         int line = 0;
         int column = 0;
-        printf("size of matrix (string and column)\n\t");
-        fgets(matrix_size, sizeof(matrix_size), stdin);
-        scanf("%79[^\n]", matrix_size);
+        printf("size of first matrix (string and column):\n\t");
+        scanf(" %79[^\n]", matrix_size);
         scan_string(matrix_size, &line, &column);
         printf("matrix_size:%d\n", line * column);
-        matrix *matrix = create_matrix(line, column);
-        printf("what type of matrix you need?\n");
-        scanf("%s", &choiced_type);
-        giving_data_type_to_matrix(matrix, choiced_type);
-        printf("please, write a value to you matrix\n");
-        write_value_into_matrix(matrix);
+        matrix *matrix1 = create_matrix();
+        printf("what type of matrix you need?\n\t");
+        printf("/double/ /integer/\n");
+        scanf(" %29[^\n]", choiced_type);
+        giving_data_type_to_matrix(matrix1, choiced_type);
+        printf("please, write a value to your matrix\n");
+        write_value_into_matrix(matrix1, line, column);
+        print_matrix(matrix1);
         break;
     }
     return 0;
 }
 void giving_data_type_to_matrix(matrix *matrix, char *choiced_type)
 {
-    if (strcmp(choiced_type, "double") == 0)
+    if (is_correct_type(choiced_type))
     {
-        matrix->type_info = get_double_type(matrix);
-    }
-    if (strcmp(choiced_type, "integer") == 0)
-    {
-        matrix->type_info = get_int_type(matrix);
-    }
-}
-
-void write_value_into_matrix(matrix *matrix)
-{
-    void *element_ptr = NULL;
-    element_ptr = matrix->element;
-    if (is_correct_type(matrix))
-    {
-        for (int i = 1; i <= (matrix->lines * matrix->columns); i++)
+        if (strcmp(choiced_type, "double") == 0)
         {
-            matrix->type_info->read(element_ptr);
-            element_ptr = get_increment_element(matrix);
+            matrix->type_info = get_double_type();
+        }
+        if (strcmp(choiced_type, "integer") == 0)
+        {
+            matrix->type_info = get_int_type();
         }
     }
+}
+// вот посюда всё робит
+void write_value_into_matrix(matrix *matrix, int c_lines, int n_columns)
+{
+    matrix->lines = c_lines;
+    matrix->columns = n_columns;
+    void *element_p = NULL;
+    printf("enter %d elements into your matrix\n", c_lines * n_columns);
+    matrix->element = malloc(matrix->type_info->get_size() * c_lines * n_columns);
+    element_p = matrix->element;
+    for (int i = 1; i <= (c_lines * n_columns); i++)
+    {
+        matrix->type_info->read(element_p);
+        element_p = get_increment_element(matrix);
+    }
+    print_matrix(matrix);
 }

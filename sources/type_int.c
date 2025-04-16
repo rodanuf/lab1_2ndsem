@@ -17,9 +17,7 @@ void print_int_element(void *element)
 }
 void read_int_element(void *element)
 {
-    int num;
-    scanf("%d", &num);
-    *(int *)element = num;
+    scanf("%d", (int *)element);
 }
 types return_int_type()
 {
@@ -43,10 +41,6 @@ const struct type_info *get_int_type()
         type_p->read = read_int_element;
         type_p->type = return_int_type;
         type_p->get_size = get_size_int_element;
-        return type_p;
     }
-    else
-    {
-        return type_p;
-    }
+    return type_p;
 }

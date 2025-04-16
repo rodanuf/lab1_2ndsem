@@ -49,32 +49,38 @@ void *get_needed_element(int line_index, int column_index, matrix *matrix)
             needed_elemnt_p = get_increment_element(matrix);
         }
     }
+    if (line_index == 1 && column_index == 1)
+    {
+        needed_elemnt_p = matrix->element;
+    }
     return needed_elemnt_p;
 }
 //
 void *get_increment_element(matrix *matrix)
 {
-    void *element_ptr = NULL;
-    element_ptr = matrix->element;
-    element_ptr++;
-    return element_ptr;
+    char *element_ptr = (char *)matrix->element;
+    element_ptr += matrix->type_info->get_size();
+    return (void *)element_ptr;
 }
 
-void *get_decrement_element(void *element_ptr)
+void *get_decrement_element(matrix *matrix, void *element_ptr)
 {
-    void *new_element_ptr = NULL;
-    new_element_ptr = element_ptr;
-    new_element_ptr--;
-    return new_element_ptr;
+    char *new_element_ptr = (char *)element_ptr;
+    new_element_ptr = new_element_ptr - matrix->type_info->get_size();
+    return (void *)new_element_ptr;
 }
 
 void print_matrix(matrix *matrix)
 {
-    void *element_ptr = matrix->element;
-    for (int i = 1; i <= (matrix->columns * matrix->lines); i++)
+    char *element_ptr = (char *)matrix->element;
+    for (int i = 0; i < (matrix->lines); i++)
     {
-        matrix->type_info->print(element_ptr);
-        element_ptr = get_increment_element(matrix);
+        for (int j = 0; j < (matrix->columns); j++)
+        {
+            matrix->type_info->print(element_ptr);
+            element_ptr += matrix->type_info->get_size();
+        }
+        printf("\n");
     }
 }
 
@@ -92,6 +98,16 @@ void transport_matrix(matrix *matrix)
                 element_ptr_for_transport = get_needed_element(i, j, matrix);
                 element_ptr_for_transport = element_ptr;
             }
+        }
+    }
+}
+void wrtie_array_matrix(matrix *matrix, void *array_p)
+{
+    if (!(is_matrix_null(matrix)))
+    {
+        if (is_data_matrix_null(matrix))
+        {
+            matrix->element = array_p;
         }
     }
 }

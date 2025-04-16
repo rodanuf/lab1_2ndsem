@@ -17,7 +17,8 @@ typedef enum errors
     INCORRECT_OPERATION,
     MEMORY_ERROR,
     MATRIX_IS_NULL,
-    INCORRECT_TYPE
+    INCORRECT_TYPE,
+    MATRIX_DATA_NOT_NULL
 } code_errors;
 
 typedef enum types

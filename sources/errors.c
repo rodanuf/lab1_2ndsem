@@ -22,6 +22,8 @@ void print_error(code_errors error)
         break;
     case INCORRECT_TYPE:
         printf("Incorrect data type\n");
+    case MATRIX_DATA_NOT_NULL:
+        printf("Matrix data is not null\n");
     default:
         break;
     }
@@ -56,20 +58,24 @@ bool is_correct_size(int size)
 }
 bool is_correct_type(char *string)
 {
-    if (strcmp(string, "double") == 0 && strcmp(string, "integer") == 0)
+    if (strcmp(string, "double") == 0 || strcmp(string, "integer") == 0)
     {
         return true;
     }
-    print_error(INCORRECT_TYPE);
-    return false;
+    else
+    {
+        print_error(INCORRECT_TYPE);
+        printf("string: %s\n", string);
+        return false;
+    }
 }
 bool is_matrix_null(matrix *matrix)
 {
     if (matrix == NULL)
     {
+        print_error(MATRIX_IS_NULL);
         return true;
     }
-    print_error(MATRIX_IS_NULL);
     return false;
 }
 bool is_correct_input(const char *string, matrix *matrix)
@@ -108,5 +114,14 @@ bool is_correct_input(const char *string, matrix *matrix)
         return true;
     }
     print_error(INCORRECT_INPUT);
+    return false;
+}
+bool is_data_matrix_null(matrix *matrix)
+{
+    if (matrix->element == NULL)
+    {
+        return true;
+    }
+    print_error(MATRIX_DATA_NOT_NULL);
     return false;
 }

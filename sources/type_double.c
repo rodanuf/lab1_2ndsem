@@ -24,9 +24,7 @@ void print_double_element(void *element)
 }
 void read_double_element(void *element_ptr)
 {
-    double num;
-    scanf("%lf", &num);
-    *(double *)element_ptr = num;
+    scanf("%lf", (double *)element_ptr);
 }
 types return_double_type()
 {
