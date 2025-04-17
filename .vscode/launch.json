@@ -11,7 +11,7 @@
       "cwd": "c:/project1/lab_test",
       "program": "c:/project1/lab_test/build/Debug/outDebug",
       "MIMode": "gdb",
-      "miDebuggerPath": "gdb",
+      "miDebuggerPath": "/usr/bin/gdb",
       "setupCommands": [
         {
           "description": "Enable pretty-printing for gdb",

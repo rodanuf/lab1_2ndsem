@@ -20,7 +20,7 @@ size_t get_size_double_element()
 }
 void print_double_element(void *element)
 {
-    printf("%lf ", *(double *)element);
+    printf("%.2lf ", *(double *)element);
 }
 void read_double_element(void *element_ptr)
 {

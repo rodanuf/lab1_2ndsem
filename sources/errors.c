@@ -22,8 +22,10 @@ void print_error(code_errors error)
         break;
     case INCORRECT_TYPE:
         printf("Incorrect data type\n");
+        break;
     case MATRIX_DATA_NOT_NULL:
         printf("Matrix data is not null\n");
+        break;
     default:
         break;
     }
@@ -37,6 +39,7 @@ bool is_matrixs_same(matrix *matrix1, matrix *matrix2)
     }
     print_error(INCORRECT_OPERATION);
     return false;
+    exit(1);
 }
 bool is_correct_format(matrix *matrix)
 {

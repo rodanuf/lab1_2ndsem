@@ -15,10 +15,10 @@ typedef struct matrix
 // обЪект как константа с ленивой инициализацией
 matrix *create_matrix();
 // create new ptr;
-void get_sum_matrix(matrix *matrix_one, matrix *matrix_two);
+void get_sum_matrix(matrix *matrix_one, matrix *matrix_two, matrix *matrix_result);
 void get_multiplication_matrix(matrix *matrix_one, matrix *matrix_two);
 void *get_needed_element(int line_index, int column_index, matrix *matrix);
-void *get_increment_element(matrix *matrix);
+void *get_increment_element(matrix *matrix, void *element_ptr);
 void *get_decrement_element(matrix *matrix, void *element);
 void print_matrix(matrix *matrix);
 void transport_matrix(matrix *matrix);

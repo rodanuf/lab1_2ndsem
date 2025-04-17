@@ -56,6 +56,7 @@ void scan_string(char *string, int *line, int *column)
     else
     {
         print_error(INCORRECT_FORMAT_OF_MATRIX);
+        exit(1);
     }
 }
 
@@ -64,26 +65,17 @@ void multiple_choice(int starting_choice)
     switch (starting_choice)
     {
     case 1:
-        printf("enter your matrices (remember, matrices must be with same types) \n");
-        char matrix_size[80];
-        char choiced_type[30];
-        int line = 0;
-        int column = 0;
-        printf("size of first matrix (string and column):\n\t");
-        scanf(" %79[^\n]", matrix_size);
-        scan_string(matrix_size, &line, &column);
-        printf("matrix_size:%d\n", line * column);
-        matrix *matrix1 = create_matrix();
-        printf("what type of matrix you need?\n\t");
-        printf("/double/ /integer/\n");
-        scanf(" %29[^\n]", choiced_type);
-        giving_data_type_to_matrix(matrix1, choiced_type);
-        printf("please, write a value to your matrix\n");
-        write_value_into_matrix(matrix1, line, column);
-        print_matrix(matrix1);
+        printf("default count of matrices for this operation is 2\n");
+        matrix *matrix1 = get_consol_iteraction();
+        matrix *matrix2 = get_consol_iteraction();
+        matrix *m_result = create_matrix();
+        template_matrix(matrix1, m_result);
+        get_sum_matrix(matrix1, matrix2, m_result);
+        printf("result:\n");
+        printf("\n");
+        print_matrix(m_result);
         break;
     }
-    return 0;
 }
 void giving_data_type_to_matrix(matrix *matrix, char *choiced_type)
 {
@@ -99,7 +91,6 @@ void giving_data_type_to_matrix(matrix *matrix, char *choiced_type)
         }
     }
 }
-// вот посюда всё робит
 void write_value_into_matrix(matrix *matrix, int c_lines, int n_columns)
 {
     matrix->lines = c_lines;
@@ -111,7 +102,40 @@ void write_value_into_matrix(matrix *matrix, int c_lines, int n_columns)
     for (int i = 1; i <= (c_lines * n_columns); i++)
     {
         matrix->type_info->read(element_p);
-        element_p = get_increment_element(matrix);
+        element_p = get_increment_element(matrix, element_p);
     }
+}
+matrix *get_consol_iteraction()
+{
+    printf("enter your matrix:\n");
+    printf("(remember, matrices must be with same types) \n");
+    char matrix_size[80];
+    char choiced_type[30];
+    int line = 0;
+    int column = 0;
+    printf("size of matrix (string and column):\n\t");
+    scanf(" %79[^\n]", matrix_size);
+    scan_string(matrix_size, &line, &column);
+    printf("matrix_size:%d\n", line * column);
+    matrix *matrix = create_matrix();
+    printf("what type of matrix you need?\n\t");
+    printf("/double/ /integer/\n");
+    scanf(" %29[^\n]", choiced_type);
+    giving_data_type_to_matrix(matrix, choiced_type);
+    printf("please, write a value to your matrix\n");
+    write_value_into_matrix(matrix, line, column);
+    printf("\n");
+    printf("your input matrix:\n");
+    printf("\n");
     print_matrix(matrix);
+    printf("\n");
+    return matrix;
+}
+
+void template_matrix(matrix *matrix_sample, matrix *new_matrix)
+{
+    new_matrix->lines = matrix_sample->lines;
+    new_matrix->columns = matrix_sample->columns;
+    new_matrix->element = malloc(matrix_sample->type_info->get_size() * matrix_sample->columns * matrix_sample->lines);
+    new_matrix->type_info = matrix_sample->type_info;
 }
