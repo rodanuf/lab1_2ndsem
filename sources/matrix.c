@@ -86,18 +86,22 @@ void print_matrix(matrix *matrix)
     }
 }
 
-void transpose_matrix(matrix *m_originaly, matrix *m_result)
+void transpose_matrix(matrix *matrix)
 {
-    check_matrix_null(m_originaly);
-    void *p_on_1st_element = m_originaly->element;
-    void *p_on_result = m_result->element;
-    for (int j = 1; j <= (m_originaly->lines); j++)
+    check_matrix_null(matrix);
+    void *p_on_line = matrix->element;
+    void *p_on_column = matrix->element;
+    for (int j = 1; j <= (matrix->lines); j++)
     {
-        for (int i = 1; i <= (m_originaly->columns); i++)
+        for (int i = j; i <= (matrix->columns); i++)
         {
-            p_on_1st_element = get_needed_element(i, j, m_originaly);
-            m_originaly->type_info->swap(p_on_1st_element, p_on_result);
-            p_on_result = get_increment_element(m_result, p_on_result);
+            if (i == j)
+            {
+                continue;
+            }
+            p_on_line = get_needed_element(j, i, matrix);
+            p_on_column = get_needed_element(i, j, matrix);
+            matrix->type_info->swap(p_on_column, p_on_line);
         }
     }
 }

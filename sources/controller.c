@@ -4,56 +4,23 @@
 
 void scan_string(char *string, int *line, int *column)
 {
-    int count_of_numbers = 0;
-    int *numbers_array = NULL;
-    while (*string != 0)
+    int i = 0;
+    int num = 0;
+    while ((int)string[i] != 0)
     {
-        if ((((int)*string) == 48) && (count_of_numbers == 0))
+        if ((int)string[i] > 48 && (int)string[i] < 58)
         {
-            printf("number cannot sart with zero\n");
-            print_error(INCORRECT_INPUT);
+            num = num * 10;
+            num = num + (int)(string[i] - '0');
         }
-        else
+        if (string[i] == '.')
         {
-            if (((int)*string > 47) && ((int)*string < 58))
-            {
-                if (numbers_array == NULL)
-                {
-                    count_of_numbers++;
-                    numbers_array = malloc(sizeof(int));
-                    numbers_array[0] = ((int)*string - 48);
-                }
-                else
-                {
-                    count_of_numbers++;
-                    int *new_numbers_array = calloc(count_of_numbers, sizeof(int));
-                    for (int j = 0; j <= (count_of_numbers - 2); j++)
-                    {
-                        new_numbers_array[j] = numbers_array[j];
-                        new_numbers_array[count_of_numbers - 1] = (int)*string - 48;
-                    }
-                    numbers_array = new_numbers_array;
-                }
-            }
+            break;
         }
-        string++;
+        i++;
     }
-    for (int k = 0; k <= (count_of_numbers / 2 - 1); k++)
-    {
-        *line = *line * 10;
-        *column = *column * 10;
-        *line += numbers_array[k];
-        *column += numbers_array[k + (count_of_numbers / 2)];
-    }
-    if (*line == *column)
-    {
-        printf("lines:%d\n", *line);
-        printf("columns:%d\n", *column);
-    }
-    else
-    {
-        print_error(INCORRECT_FORMAT_OF_MATRIX);
-    }
+    *line = num;
+    *column = num;
 }
 
 void multiple_choice(int starting_choice)
@@ -88,12 +55,10 @@ void multiple_choice(int starting_choice)
     case 3:
         printf("default count of needed matrices for this operation is 1\n");
         matrix1 = get_consol_iteraction();
-        m_result = create_matrix();
-        template_matrix(matrix1, m_result);
-        transpose_matrix(matrix1, m_result);
+        transpose_matrix(matrix1);
         printf("result:\n");
         printf("\n");
-        print_matrix(m_result);
+        print_matrix(matrix1);
         break;
     case 4:
         printf("default count of needed matrices for this operation is 1\n");
@@ -146,14 +111,14 @@ matrix *get_consol_iteraction()
     char choiced_type[30];
     int line = 0;
     int column = 0;
-    printf("size of matrix (string and column):\n\t");
+    printf("size of matrix:\n\t");
     scanf(" %79[^\n]", matrix_size);
     scan_string(matrix_size, &line, &column);
-    printf("matrix_size:%d\n", line * column);
+    printf("matrix_size:%d\n", line);
     matrix *matrix = create_matrix();
     printf("what type of matrix you need?\n\t");
     printf("/double/ /integer/\n");
-    scanf(" %29[^\n]", choiced_type);
+    scanf(" %29[^ \n]", choiced_type);
     giving_data_type_to_matrix(matrix, choiced_type);
     write_value_into_matrix(matrix, line, column);
     printf("\n");

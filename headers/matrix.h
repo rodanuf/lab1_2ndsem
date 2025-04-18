@@ -18,6 +18,6 @@ void *get_needed_element(int line_index, int column_index, matrix *matrix);
 void *get_increment_element(matrix *matrix, void *ptr_element);
 void *get_decrement_element(matrix *matrix, void *ptr_element);
 void print_matrix(matrix *matrix);
-void transpose_matrix(matrix *originally_matrix, matrix *matrix_result);
+void transpose_matrix(matrix *matrix);
 void write_array_matrix(matrix *matrix, void *ptr_array);
 void linear_combination_of_lines(matrix *matrix, int index, void *ptr_array);
