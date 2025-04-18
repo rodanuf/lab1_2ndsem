@@ -9,7 +9,7 @@ int main()
     printf("1. sum matrices\n\t");
     printf("2. multplication matrices\n\t");
     printf("3. transposition of matrix\n\t");
-    printf("4. multiolication matrix on scalar\n");
+    printf("4. multiplication matrix on scalar\n");
     int starting_choice;
     scanf("%i", &starting_choice);
     multiple_choice(starting_choice);

@@ -18,7 +18,7 @@ typedef enum errors
     MEMORY_ERROR,
     MATRIX_IS_NULL,
     INCORRECT_TYPE,
-    MATRIX_DATA_NOT_NULL
+    MATRIX_DATA_IS_NULL
 } code_errors;
 
 typedef enum types
@@ -27,9 +27,10 @@ typedef enum types
     DOUBLE
 } types;
 
-typedef void (*math_operation)(void *num_one, void *num_two, void *result);
+typedef void (*math_operation)(const void *num_one, const void *num_two, void *result);
 typedef void (*print_num)(void *num);
 typedef void (*read_num)(void *num);
+typedef void (*swap)(const void *num_one, const void *num_two);
 typedef enum types (*check_type)();
 typedef size_t (*get_size)();
 
@@ -39,6 +40,7 @@ typedef struct type_info
     math_operation multiplication;
     print_num print;
     read_num read;
+    swap swap;
     check_type type;
     get_size get_size;
 } type_info;

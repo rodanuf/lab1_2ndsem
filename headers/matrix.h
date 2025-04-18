@@ -11,16 +11,13 @@ typedef struct matrix
     int columns;
     const struct type_info *type_info;
 } matrix;
-// избавиться от matrix*
-// обЪект как константа с ленивой инициализацией
 matrix *create_matrix();
-// create new ptr;
-void get_sum_matrix(matrix *matrix_one, matrix *matrix_two, matrix *matrix_result);
-void get_multiplication_matrix(matrix *matrix_one, matrix *matrix_two);
+void get_sum_matrix(matrix *matrix1, matrix *matrix2, matrix *m_result);
+void get_multiplication_matrix(matrix *matrix1, matrix *matrix2, matrix *ma_result);
 void *get_needed_element(int line_index, int column_index, matrix *matrix);
-void *get_increment_element(matrix *matrix, void *element_ptr);
-void *get_decrement_element(matrix *matrix, void *element);
+void *get_increment_element(matrix *matrix, void *ptr_element);
+void *get_decrement_element(matrix *matrix, void *ptr_element);
 void print_matrix(matrix *matrix);
-void transport_matrix(matrix *matrix);
-void write_array_matrix(matrix *matrix, void *array);
-void sum_of_string(matrix *matrix, int num_of_line_one, int num_of_line_two, void *coefficient);
+void transpose_matrix(matrix *originally_matrix, matrix *matrix_result);
+void write_array_matrix(matrix *matrix, void *ptr_array);
+void linear_combination_of_lines(matrix *matrix, int index, void *ptr_array);

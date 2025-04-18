@@ -7,83 +7,83 @@ void print_error(code_errors error)
     {
     case INCORRECT_FORMAT_OF_MATRIX:
         printf("Incorrect format of matrix\n");
+        exit(1);
         break;
     case INCORRECT_INPUT:
         printf("Incorrect input\n");
+        exit(1);
         break;
     case INCORRECT_OPERATION:
         printf("Incorrect operation\n");
+        exit(1);
         break;
     case MEMORY_ERROR:
         printf("Memory error\n");
+        exit(1);
         break;
     case MATRIX_IS_NULL:
         printf("Matrix is null\n");
+        exit(1);
         break;
     case INCORRECT_TYPE:
         printf("Incorrect data type\n");
+        exit(1);
         break;
-    case MATRIX_DATA_NOT_NULL:
-        printf("Matrix data is not null\n");
+    case MATRIX_DATA_IS_NULL:
+        printf("Matrix data is null\n");
+        exit(1);
         break;
     default:
         break;
     }
 }
 ///// TODO: return code_error, if it
-bool is_matrixs_same(matrix *matrix1, matrix *matrix2)
+code_errors check_matrices_same(matrix *matrix1, matrix *matrix2)
 {
-    if (matrix1->type_info->type == matrix2->type_info->type)
+    if (matrix1->type_info->type != matrix2->type_info->type ||
+        matrix1->columns != matrix2->columns ||
+        matrix1->lines != matrix2->lines)
     {
-        return true;
+        return INCORRECT_OPERATION;
     }
-    print_error(INCORRECT_OPERATION);
-    return false;
-    exit(1);
+    return -1;
 }
-bool is_correct_format(matrix *matrix)
+code_errors check_correct_format(matrix *matrix)
 {
-    if (matrix->lines == matrix->columns)
+    if (matrix->lines != matrix->columns)
     {
-        return true;
+        return INCORRECT_FORMAT_OF_MATRIX;
     }
-    print_error(INCORRECT_FORMAT_OF_MATRIX);
-    return false;
+    return -1;
 }
-bool is_correct_size(int size)
+code_errors check_correct_size(int size)
 {
-    if (size % 2 == 0)
+    if (size % 2 != 0)
     {
-        return true;
+        return INCORRECT_FORMAT_OF_MATRIX;
     }
-    print_error(INCORRECT_FORMAT_OF_MATRIX);
-    return false;
+    return -1;
 }
-bool is_correct_type(char *string)
+code_errors check_correct_type(char *string)
 {
-    if (strcmp(string, "double") == 0 || strcmp(string, "integer") == 0)
+    if (strcmp(string, "double") != 0 && strcmp(string, "integer") != 0)
     {
-        return true;
+        return INCORRECT_TYPE;
     }
-    else
-    {
-        print_error(INCORRECT_TYPE);
-        printf("string: %s\n", string);
-        return false;
-    }
+    return -1;
 }
-bool is_matrix_null(matrix *matrix)
+code_errors check_matrix_null(matrix *matrix)
 {
     if (matrix == NULL)
     {
-        print_error(MATRIX_IS_NULL);
-        return true;
+        return MATRIX_IS_NULL;
     }
-    return false;
+    return -1;
 }
-bool is_correct_input(const char *string, matrix *matrix)
+code_errors check_correct_input(const char *string, check_type type)
 {
     int cnumber = 0;
+    int cdots = 0;
     while (*string != '\0')
     {
 
@@ -91,14 +91,10 @@ bool is_correct_input(const char *string, matrix *matrix)
         {
             if (*string == '.')
             {
-                if (matrix->type_info->type == 1)
+                cdots++;
+                if (type() != 1)
                 {
-                    return true;
-                }
-                else
-                {
-                    print_error(INCORRECT_INPUT);
-                    return false;
+                    return INCORRECT_INPUT;
                 }
             }
             else
@@ -112,19 +108,25 @@ bool is_correct_input(const char *string, matrix *matrix)
             string++;
         }
     }
-    if (cnumber != 0)
+    if (cnumber == 0)
     {
-        return true;
+        return INCORRECT_INPUT;
     }
-    print_error(INCORRECT_INPUT);
-    return false;
+    if (cdots == 0 && type() == 1)
+    {
+        return INCORRECT_INPUT;
+    }
+    if (cdots == cnumber && type() == 1)
+    {
+        return INCORRECT_INPUT;
+    }
+    return -1;
 }
-bool is_data_matrix_null(matrix *matrix)
+code_errors check_data_matrix_null(matrix *matrix)
 {
     if (matrix->element == NULL)
     {
-        return true;
+        return MATRIX_DATA_IS_NULL;
     }
-    print_error(MATRIX_DATA_NOT_NULL);
-    return false;
+    return -1;
 }
