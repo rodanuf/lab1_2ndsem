@@ -1,8 +1,11 @@
 #include "../headers/controller.h"
 #include "../headers/type_info.h"
 #include "../headers/errors.h"
+#include "../headers/matrix.h"
+#include "../headers/type_double.h"
+#include "../headers/type_int.h"
 
-void scan_string(char *string, int *line, int *column)
+void scan_size(char *string, int *line, int *column)
 {
     int i = 0;
     int num = 0;
@@ -25,15 +28,18 @@ void scan_string(char *string, int *line, int *column)
 
 void multiple_choice(int starting_choice)
 {
+    matrix *matrix1 = NULL;
+    matrix *matrix2 = NULL;
+    matrix *m_result = NULL;
     switch (starting_choice)
     {
     case 1:
         printf("default count of needed matrices for this operation is 2\n");
-        matrix *matrix1 = get_consol_iteraction();
-        matrix *matrix2 = get_consol_iteraction();
-        matrix *m_result = create_matrix();
+        matrix1 = get_consol_iteraction();
+        matrix2 = get_consol_iteraction();
+        m_result = create_matrix();
         template_matrix(matrix1, m_result);
-        get_sum_matrix(matrix1, matrix2, m_result);
+        sum_matrix(matrix1, matrix2, m_result);
         printf("result:\n");
         printf("\n");
         print_matrix(m_result);
@@ -47,10 +53,13 @@ void multiple_choice(int starting_choice)
         matrix2 = get_consol_iteraction();
         m_result = create_matrix();
         template_matrix(matrix1, m_result);
-        get_multiplication_matrix(matrix1, matrix2, m_result);
+        multiply_matrix(matrix1, matrix2, m_result);
         printf("result:\n");
         printf("\n");
         print_matrix(m_result);
+        free(matrix1);
+        free(matrix2);
+        free(m_result);
         break;
     case 3:
         printf("default count of needed matrices for this operation is 1\n");
@@ -59,6 +68,7 @@ void multiple_choice(int starting_choice)
         printf("result:\n");
         printf("\n");
         print_matrix(matrix1);
+        free(matrix1);
         break;
     case 4:
         printf("default count of needed matrices for this operation is 1\n");
@@ -72,12 +82,13 @@ void multiple_choice(int starting_choice)
         printf("result:\n");
         printf("\n");
         print_matrix(matrix1);
+        free(matrix1);
         break;
     }
 }
 void giving_data_type_to_matrix(matrix *matrix, char *choiced_type)
 {
-    print_error(check_correct_type(choiced_type));
+    //print_error(check_correct_type(choiced_type));
     if (strcmp(choiced_type, "double") == 0)
     {
         matrix->type_info = get_double_type();
@@ -89,18 +100,17 @@ void giving_data_type_to_matrix(matrix *matrix, char *choiced_type)
 }
 void write_value_into_matrix(matrix *matrix, int c_lines, int n_columns)
 {
-    matrix->lines = c_lines;
+    matrix->rows = c_lines;
     matrix->columns = n_columns;
     void *element_p = NULL;
     printf("enter %d elements into your matrix\n", c_lines * n_columns);
-    matrix->element = malloc(matrix->type_info->get_size() * c_lines * n_columns);
+    matrix->element = calloc(c_lines * n_columns, matrix->type_info->get_size());
     element_p = matrix->element;
-    char input[100];
     for (int i = 1; i <= (c_lines * n_columns); i++)
     {
-
+        clean_buffer();
         matrix->type_info->read(element_p);
-        element_p = get_increment_element(matrix, element_p);
+        element_p += matrix->type_info->get_size();
     }
 }
 matrix *get_consol_iteraction()
@@ -113,7 +123,8 @@ matrix *get_consol_iteraction()
     int column = 0;
     printf("size of matrix:\n\t");
     scanf(" %79[^\n]", matrix_size);
-    scan_string(matrix_size, &line, &column);
+    check_exit(matrix_size);
+    scan_size(matrix_size, &line, &column);
     printf("matrix_size:%d\n", line);
     matrix *matrix = create_matrix();
     printf("what type of matrix you need?\n\t");
@@ -131,19 +142,41 @@ matrix *get_consol_iteraction()
 
 void template_matrix(matrix *matrix_sample, matrix *new_matrix)
 {
-    new_matrix->lines = matrix_sample->lines;
+    new_matrix->rows = matrix_sample->rows;
     new_matrix->columns = matrix_sample->columns;
-    new_matrix->element = malloc(matrix_sample->type_info->get_size() * matrix_sample->columns * matrix_sample->lines);
+    new_matrix->element = calloc(matrix_sample->columns * matrix_sample->rows, matrix_sample->type_info->get_size());
     new_matrix->type_info = matrix_sample->type_info;
 }
+
 void *read_array(matrix *matrix)
 {
-    void *p_array = malloc(matrix->type_info->get_size() * matrix->lines);
+    void *p_array = malloc(matrix->type_info->get_size() * matrix->rows);
     void *p_enterim = p_array;
-    for (int i = 1; i <= matrix->lines; i++)
+    for (int i = 1; i <= matrix->rows; i++)
     {
         matrix->type_info->read(p_enterim);
-        p_enterim = get_increment_element(matrix, p_enterim);
+        p_enterim += matrix->type_info->get_size();
     }
     return p_array;
+}
+
+void clean_buffer()
+{
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF)
+    {
+        if (!isspace(c))
+        {                     
+            ungetc(c, stdin);
+            break;
+        }
+    }
+}
+
+void check_exit(char *string)
+{
+    if (strcmp(string, "exit") == 0)
+    {
+        exit(1);
+    }
 }

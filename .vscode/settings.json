@@ -59,6 +59,7 @@
   "C_Cpp_Runner.msvcSecureNoWarnings": false,
   "makefile.configureOnOpen": true,
   "files.associations": {
-    "matrix.h": "c"
+    "matrix.h": "c",
+    "errors.h": "c"
   }
 }
