@@ -7,14 +7,14 @@
 #include "../headers/type_double_functions.h"
 
 // TODO: create alias for functions
-void get_double_sum(const void *num_one, const void *num_two, void *result)
+void sum_double(const void *num_one, const void *num_two, void *result)
 {
     double *a = (double *)num_one;
     double *b = (double *)num_two;
     *(double *)result = (*a) + (*b);
 }
 
-void get_double_multiplication(const void *num_one, const void *num_two, void *result)
+void multiply_double(const void *num_one, const void *num_two, void *result)
 {
     double *a = (double *)num_one;
     double *b = (double *)num_two;
@@ -69,6 +69,11 @@ void swap_double_elements(void *element_one, void *element_two)
     *(double *)element_two = temp;
 }
 
+char *get_type()
+{
+    return "double";
+}
+
 static struct type_info *type_p = NULL;
 
 const struct type_info *get_double_type()
@@ -76,8 +81,8 @@ const struct type_info *get_double_type()
     if (type_p == NULL)
     {
         type_p = malloc(sizeof(type_info));
-        type_p->sum = get_double_sum;
-        type_p->multiplication = get_double_multiplication;
+        type_p->sum = sum_double;
+        type_p->multiplication = multiply_double;
         type_p->get_size = get_size_double_element;
         type_p->print = print_double_element;
         type_p->read = read_double_element;

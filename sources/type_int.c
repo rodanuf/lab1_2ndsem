@@ -52,7 +52,6 @@ void read_int_element(void *element)
     char *remainder;
     *(int *)element = (int)strtol(result, &remainder, 10);
     free(result);
-    free (remainder);
 }
 
 void swap_int_elements(void *element_one, void *element_two)

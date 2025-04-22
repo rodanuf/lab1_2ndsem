@@ -88,7 +88,7 @@ void multiple_choice(int starting_choice)
 }
 void giving_data_type_to_matrix(matrix *matrix, char *choiced_type)
 {
-    //print_error(check_correct_type(choiced_type));
+    // print_error(check_correct_type(choiced_type));
     if (strcmp(choiced_type, "double") == 0)
     {
         matrix->type_info = get_double_type();
@@ -166,7 +166,7 @@ void clean_buffer()
     while ((c = getchar()) != '\n' && c != EOF)
     {
         if (!isspace(c))
-        {                     
+        {
             ungetc(c, stdin);
             break;
         }

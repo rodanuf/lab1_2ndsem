@@ -15,4 +15,5 @@ int main()
     int starting_choice;
     scanf("%i", &starting_choice);
     multiple_choice(starting_choice);
+    return 0;
 }

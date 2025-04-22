@@ -9,7 +9,6 @@ matrix *create_matrix()
 
 void sum_matrix(matrix *matrix1, matrix *matrix2, matrix *m_result)
 {
-    print_error(check_matrix_null(matrix1));
     void *p_on_1st_element = matrix1->element;
     void *p_on_2nd_element = matrix2->element;
     void *p_on_result = m_result->element;
@@ -24,10 +23,9 @@ void sum_matrix(matrix *matrix1, matrix *matrix2, matrix *m_result)
 
 void multiply_matrix(matrix *matrix1, matrix *matrix2, matrix *m_result)
 {
-    print_error(check_matrix_null(matrix1));
     void *p_on_1st_element = matrix1->element;
     void *p_on_2nd_element = matrix2->element;
-    void *p_on_result = m_result->element; 
+    void *p_on_result = m_result->element;
     void *p_enterim = malloc(matrix1->type_info->get_size());
     for (int i = 1; i <= (matrix2->rows); i++)
     {
@@ -70,7 +68,6 @@ void print_matrix(matrix *matrix)
 
 void transpose_matrix(matrix *matrix)
 {
-    check_matrix_null(matrix);
     void *p_on_line = matrix->element;
     void *p_on_column = matrix->element;
     for (int j = 1; j <= (matrix->rows); j++)
@@ -90,15 +87,11 @@ void transpose_matrix(matrix *matrix)
 
 void write_array_into_matrix(matrix *matrix, void *array)
 {
-    print_error(check_matrix_null(matrix));
-    print_error(check_data_matrix_null(matrix));
     matrix->element = array;
 }
 
 void linear_combination_of_lines(matrix *matrix, int target_line, void *p_array)
 {
-    print_error(check_matrix_null(matrix));
-    print_error(check_data_matrix_null(matrix));
     void *p_on_element = matrix->element;
     void *p_on_2nd_element = p_array;
     void *enterim_row = calloc(matrix->columns, matrix->type_info->get_size());
@@ -115,9 +108,9 @@ void linear_combination_of_lines(matrix *matrix, int target_line, void *p_array)
             matrix->type_info->multiplication(p_on_element, p_on_2nd_element, enterim_row);
             p_on_index_line = get_element(target_line, j, matrix);
             matrix->type_info->sum(enterim_row, p_on_index_line, p_on_index_line);
-            p_on_element += matrix->type_info->get_size(); 
+            p_on_element += matrix->type_info->get_size();
             enterim_row += matrix->type_info->get_size();
-            printf("%d ",*(int *)p_on_index_line);
+            printf("%d ", *(int *)p_on_index_line);
         }
         p_on_2nd_element += matrix->type_info->get_size();
     }
