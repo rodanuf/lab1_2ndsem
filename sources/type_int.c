@@ -24,7 +24,7 @@ void print_int_element(void *element)
     printf("%d ", *(int *)element);
 }
 
-void read_int_element(void *element)
+void read_int_element(void *element, matrix *matrix, type_error *error_handing)
 {
     char buffer[2];
     char *result = NULL;
@@ -49,6 +49,7 @@ void read_int_element(void *element)
             break;
         }
     }
+    check_correct_input(result, matrix, error_handing);
     char *remainder;
     *(int *)element = (int)strtol(result, &remainder, 10);
     free(result);

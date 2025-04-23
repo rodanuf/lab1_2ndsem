@@ -30,13 +30,6 @@ add_executable(lab1_2ndsem
     sources/type_double.c 
     sources/type_int.c 
 )
-target_include_directories(lab1_2ndsem PRIVATE headers)
-
-if(MINGW)
-    set_target_properties(lab1_2ndsem PROPERTIES
-        LINK_FLAGS "-Wl,--subsystem,console"
-    )
-endif()
 
 add_executable(googletest
     sources/googletest.cpp
@@ -46,13 +39,6 @@ add_executable(googletest
     sources/type_double.c 
     sources/type_int.c 
 )
-
-if(MINGW)
-    set_target_properties(googletest PROPERTIES
-        LINK_FLAGS "-Wl,--subsystem,console"
-    )
-endif()
-
 
 target_link_libraries(googletest gtest gtest_main)
 

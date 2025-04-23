@@ -6,7 +6,6 @@
 #include "../headers/errors.h"
 #include "../headers/type_double_functions.h"
 
-// TODO: create alias for functions
 void sum_double(const void *num_one, const void *num_two, void *result)
 {
     double *a = (double *)num_one;
@@ -31,7 +30,7 @@ void print_double_element(void *element)
     printf("%.2lf ", *(double *)element);
 }
 
-void read_double_element(void *element)
+void read_double_element(void *element, matrix *matrix, type_error *error_handing)
 {
     char buffer[2];
     char *result = NULL;
@@ -56,6 +55,7 @@ void read_double_element(void *element)
             break;
         }
     }
+    check_correct_input(result, matrix, error_handing);
     char *remainder;
     *(double *)element = (double)strtod(result, &remainder);
     free(result);
@@ -67,11 +67,6 @@ void swap_double_elements(void *element_one, void *element_two)
     double temp = *(double *)element_one;
     *(double *)element_one = *(double *)element_two;
     *(double *)element_two = temp;
-}
-
-char *get_type()
-{
-    return "double";
 }
 
 static struct type_info *type_p = NULL;

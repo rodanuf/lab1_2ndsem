@@ -3,7 +3,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
-#include "type_info.h"
 
 #ifdef __cplusplus
 extern "C"
@@ -17,13 +16,6 @@ extern "C"
         int columns;
         const struct type_info *type_info;
     } matrix;
-
-    typedef struct result_info
-    {
-        matrix *m_result;
-        bool is_succses;
-        type_error *type_error;
-    } result_info;
 
     matrix *create_matrix();
     void sum_matrix(matrix *matrix1, matrix *matrix2, matrix *m_result);

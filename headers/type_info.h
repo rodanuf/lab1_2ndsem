@@ -1,4 +1,5 @@
 #pragma once
+#include "matrix.h"
 
 #ifdef __cplusplus
 extern "C"
@@ -13,22 +14,20 @@ extern "C"
 
     typedef enum input_errors
     {
-        INCORRECT_FORMAT_OF_MATRIX,
-        INCORRECT_INPUT,
-        MEMORY_ERROR,
-        INCORRECT_TYPE,
+        INCORRECT_INPUT = 1,
+        INCORRECT_FORMAT_OF_MATRIX = 2,
+        INCORRECT_TYPE = 3,
     } input_errors;
 
     typedef enum matrix_errors
     {
         MATRIX_DATA_IS_NULL = 4,
         INCORRECT_OPERATION = 5,
-        MATRIX_IS_NULL = 6
     } matrix_errors;
 
     typedef void (*math_operation)(const void *operand_one, const void *operand_two, void *result);
     typedef void (*print_num)(void *num);
-    typedef void (*read_num)(void *num);
+    typedef void (*read_num)(void *num, matrix *matrix, type_error *error_handing);
     typedef void (*swap)(void *operand_one, void *operand_two);
     typedef size_t (*get_size)();
 
